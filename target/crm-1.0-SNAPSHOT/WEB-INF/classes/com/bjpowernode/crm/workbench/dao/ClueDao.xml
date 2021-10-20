@@ -5,6 +5,17 @@
 
 <mapper namespace="com.bjpowernode.crm.workbench.dao.ClueDao">
 
+        <select id="detail" resultType="Clue">
+
+                select
+
+                from tbl_clue c
+                join tbl_user u
+                on c.owner = u.id
+
+                where  c.id = #{id}
+        </select>
+
     <insert id="save"  >
 
         insert into tbl_clue(

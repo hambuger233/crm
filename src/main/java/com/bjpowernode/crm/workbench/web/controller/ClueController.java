@@ -43,9 +43,24 @@ public class ClueController extends HttpServlet {
         }else if("/workbench/clue/save.do".equals(path)){
 
             save(request,response);
+        }else if("/workbench/clue/detail.do".equals(path)){
+
+            detail(request,response);
         }
 
 
+
+
+    }
+
+    private void detail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        //跳转到线索的详细信息页
+        String id = request.getParameter("id");
+        ClueService cs = (ClueService) ServiceFactory.getService(new ClueServiceImpl());
+        Clue c = cs.detail(id);
+        request.setAttribute("c",c);
+        request.getRequestDispatcher("/workbench/clue/detail.jsp").forward(request,response);
 
 
     }
