@@ -84,7 +84,7 @@ String basePath = request.getScheme
 						* */
 						var html ="";
 						$.each(data,function (i,n){
-								html += '<tr>--%>';
+								html += '<tr>';
 								html += '<td><input type="checkbox" name="xz" value="'+ n.id +'"/></td>';
 								html += '<td>'+ n.name +'</td>';
 								html += '<td>'+ n.startDate +'</td>';
@@ -108,6 +108,40 @@ String basePath = request.getScheme
 
 
 		})
+
+
+		//为关联按钮绑定事件，执行相关操作
+		$("#bundBtn").click(function (){
+
+			var $xz = $("input[name=xz]:checked");
+			if($xz.length = 0){
+				alert("请选择需要关联的市场活动")
+
+				//一条获多条
+			}else{
+
+				//workbench/clue/bund.do?clueId=?&activityId=?&activityId=?
+				alert($xz.length);
+				var param = "cid=${c.id}&";
+				for(var i=0;i<$xz.length;i++){
+
+					param += "aid="+$($xz[i]).val();
+
+					alert(param)
+					if(i<$xz.length-1){
+						param += "&";
+					}
+
+				}
+				//alert(param)
+
+			}
+
+		})
+
+
+
+
 
 
 
@@ -246,7 +280,7 @@ String basePath = request.getScheme
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-					<button type="button" class="btn btn-primary" data-dismiss="modal">关联</button>
+					<button type="button" class="btn btn-primary" id="bundBtn">关联</button>
 				</div>
 			</div>
 		</div>

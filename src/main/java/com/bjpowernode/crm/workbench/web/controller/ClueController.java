@@ -52,9 +52,29 @@ public class ClueController extends HttpServlet {
         }else if("/workbench/clue/unbund.do".equals(path)){
 
             unbund(request,response);
+        }else if("/workbench/clue/getActivityListByNameAndNotByclueId.do".equals(path)){
+
+            getActivityListByNameAndNotByclueId(request,response);
         }
 
 
+
+
+    }
+
+    private void getActivityListByNameAndNotByclueId(HttpServletRequest request, HttpServletResponse response) {
+
+        System.out.println("查询市场活动列表（根据名称模糊查询+排除已经关联的）");
+        String aname = request.getParameter("aname");
+        String clueId = request.getParameter("clueId");
+
+        Map<String,String> map = new HashMap<String,String>();
+        map.put("aname",aname);
+        map.put("clueId",clueId);
+
+        ActivityService as = (ActivityService) ServiceFactory.getService(new ActivityServiceImpl());
+        List<Activity> aList = as.getActivityListByNameAndNotByclueId(map);
+        PrintJson.printJsonObj(response,aList);
 
 
     }

@@ -81,6 +81,7 @@
         <url-pattern>/workbench/clue/getActivityListByClueId.do</url-pattern>
         <url-pattern>/workbench/clue/unbund.do</url-pattern>
         <url-pattern>/workbench/clue/getActivityListByNameAndNotByclueId.do</url-pattern>
+        <url-pattern>/workbench/clue/bund.do</url-pattern>
 
     </servlet-mapping>
 
