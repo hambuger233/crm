@@ -99,7 +99,7 @@ String basePath = request.getScheme
 
 				})
 
-				$("#activityTBody").html(html);
+				$("#activityBody").html(html);
 
 			}
 
