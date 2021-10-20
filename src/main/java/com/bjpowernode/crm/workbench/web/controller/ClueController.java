@@ -108,6 +108,7 @@ public class ClueController extends HttpServlet {
         c.setFullname(fullname);
         c.setJob(job);
         c.setMphone(phone);
+        c.setEmail(email);
 
 
         ClueService cs = (ClueService) ServiceFactory.getService(new ClueServiceImpl());
