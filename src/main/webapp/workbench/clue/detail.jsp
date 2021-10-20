@@ -60,6 +60,54 @@ String basePath = request.getScheme
 		//页面加载完毕后，取出关联市场活动列表
 		showActivityList();
 
+		//为搜索关联市场活动模态窗口中的搜索框绑定事件，通过触发回车键查询
+		$("#aname").keydown(function (event){
+
+			//如果是回车键
+			if(event.keyCode == 13){
+
+				//alert("查询并展现市场活动列表")
+				$.ajax({
+					url:"workbench/clue/getActivityListByNameAndNotByclueId.do",
+					data:{
+
+						"aname" : $.trim($("#aname").val()),
+						"clueId":"${c.id}"
+					},
+					type:"get",
+					dataType:"json",
+					success:function (data){
+						/*
+						* data
+						* 		[{市场活动1},......]
+						*
+						* */
+						var html ="";
+						$.each(data,function (i,n){
+								html += '<tr>--%>';
+								html += '<td><input type="checkbox" name="xz" value="'+ n.id +'"/></td>';
+								html += '<td>'+ n.name +'</td>';
+								html += '<td>'+ n.startDate +'</td>';
+								html += '<td>'+ n.endDate + '</td>';
+								html += '<td>'+ n.owner +'</td>';
+								html += '</tr>';
+
+
+
+						})
+						$("#activitySearchBody").html(html);
+
+					}
+
+
+				})
+
+				return false;
+
+			}
+
+
+		})
 
 
 
@@ -109,9 +157,39 @@ String basePath = request.getScheme
 	}
 
 	function unbund(id){
+		$.ajax({
+			url:"workbench/clue/unbund.do",
+			data:{
 
-		alert(id)
+				"id" : id
+
+			},
+			type:"post",
+			dataType:"json",
+			success:function (data){
+
+				if(data.success){
+
+					//成功后
+					showActivityList();
+
+				}else {
+
+					alert("解除关联失败")
+				}
+
+			}
+
+
+		})
+
 	}
+
+
+
+
+
+
 	
 </script>
 
@@ -132,7 +210,7 @@ String basePath = request.getScheme
 					<div class="btn-group" style="position: relative; top: 18%; left: 8px;">
 						<form class="form-inline" role="form">
 						  <div class="form-group has-feedback">
-						    <input type="text" class="form-control" style="width: 300px;" placeholder="请输入市场活动名称，支持模糊查询">
+						    <input type="text" class="form-control" style="width: 300px;" id="aname" placeholder="请输入市场活动名称，支持模糊查询">
 						    <span class="glyphicon glyphicon-search form-control-feedback"></span>
 						  </div>
 						</form>
@@ -148,21 +226,21 @@ String basePath = request.getScheme
 								<td></td>
 							</tr>
 						</thead>
-						<tbody>
-							<tr>
-								<td><input type="checkbox"/></td>
-								<td>发传单</td>
-								<td>2020-10-10</td>
-								<td>2020-10-20</td>
-								<td>zhangsan</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox"/></td>
-								<td>发传单</td>
-								<td>2020-10-10</td>
-								<td>2020-10-20</td>
-								<td>zhangsan</td>
-							</tr>
+						<tbody id="activitySearchBody">
+<%--							<tr>--%>
+<%--								<td><input type="checkbox"/></td>--%>
+<%--								<td>发传单</td>--%>
+<%--								<td>2020-10-10</td>--%>
+<%--								<td>2020-10-20</td>--%>
+<%--								<td>zhangsan</td>--%>
+<%--							</tr>--%>
+<%--							<tr>--%>
+<%--								<td><input type="checkbox"/></td>--%>
+<%--								<td>发传单</td>--%>
+<%--								<td>2020-10-10</td>--%>
+<%--								<td>2020-10-20</td>--%>
+<%--								<td>zhangsan</td>--%>
+<%--							</tr>--%>
 						</tbody>
 					</table>
 				</div>

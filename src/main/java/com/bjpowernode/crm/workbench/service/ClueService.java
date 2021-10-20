@@ -6,4 +6,6 @@ public interface ClueService {
     boolean save(Clue c);
 
     Clue detail(String id);
+
+    boolean unbund(String id);
 }
