@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 public class ActivityServiceImpl implements ActivityService  {
+
     private ActivityDao activityDao = SqlSessionUtil.getSqlSession().getMapper(ActivityDao.class);
     private ActivityRemarkDao activityRemarkDao = SqlSessionUtil.getSqlSession().getMapper(ActivityRemarkDao.class);
     private UserDao userDao = SqlSessionUtil.getSqlSession().getMapper(UserDao.class);
@@ -173,6 +174,12 @@ public class ActivityServiceImpl implements ActivityService  {
 
         List<Activity> aList =  activityDao.getActivityListByNameAndNotByclueId(map);
 
+        return aList;
+    }
+
+    @Override
+    public List<Activity> getActivityListByName(String aname) {
+        List<Activity> aList = activityDao.getActivityListByName(aname);
         return aList;
     }
 }
