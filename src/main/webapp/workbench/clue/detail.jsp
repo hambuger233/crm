@@ -114,26 +114,61 @@ String basePath = request.getScheme
 		$("#bundBtn").click(function (){
 
 			var $xz = $("input[name=xz]:checked");
-			if($xz.length = 0){
+			if($xz.length == 0){
 				alert("请选择需要关联的市场活动")
 
 				//一条获多条
 			}else{
 
 				//workbench/clue/bund.do?clueId=?&activityId=?&activityId=?
-				alert($xz.length);
+
 				var param = "cid=${c.id}&";
 				for(var i=0;i<$xz.length;i++){
 
 					param += "aid="+$($xz[i]).val();
 
-					alert(param)
+					//alert(param)
 					if(i<$xz.length-1){
 						param += "&";
 					}
 
 				}
 				//alert(param)
+
+				//ajax请求
+
+				$.ajax({
+					url:"workbench/clue/bund.do",
+					data:param,
+					type:"post",
+					dataType:"json",
+					success:function (data){
+
+						/*
+						data :success
+
+						*
+						* */
+						if(data.success){
+
+							//成功
+							//刷新关联市场活动列表
+							showActivityList();
+
+							//清除搜索框的信息
+
+							//关闭模态窗口
+							$("#bundModal").modal("hide");
+
+						}else {
+
+							alert("关联市场活动失败")
+						}
+
+					}
+
+
+				})
 
 			}
 
@@ -453,7 +488,7 @@ String basePath = request.getScheme
 			<h3>${c.fullname}${c.appellation} <small>${c.company}</small></h3>
 		</div>
 		<div style="position: relative; height: 50px; width: 500px;  top: -72px; left: 700px;">
-			<button type="button" class="btn btn-default" onclick="window.location.href='workbench/clue/convert.jsp';"><span class="glyphicon glyphicon-retweet"></span> 转换</button>
+			<button type="button" class="btn btn-default" onclick="window.location.href='workbench/clue/convert.jsp?id=${c.id}&fullname=${c.fullname}&appellation=${c.appellation}&company=${c.company}&owner=${c.owner}';"><span class="glyphicon glyphicon-retweet"></span> 转换</button>
 			<button type="button" class="btn btn-default" data-toggle="modal" data-target="#editClueModal"><span class="glyphicon glyphicon-edit"></span> 编辑</button>
 			<button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-minus"></span> 删除</button>
 		</div>
